@@ -3,11 +3,6 @@ import grpc
 import location_pb2
 import location_pb2_grpc
 
-"""
-Sample gRPC client implementation that demonstrates how a
-mobile device can communicate with gRPC
-"""
-
 print("Sending sample payload...")
 
 channel = grpc.insecure_channel("127.0.0.1:5005")

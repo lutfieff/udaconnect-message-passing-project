@@ -81,7 +81,19 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 3. `kubectl apply -f deployment/postgres.yaml` - Set up a Postgres database running PostGIS
 4. `kubectl apply -f deployment/udaconnect-api.yaml` - Set up the service and deployment for the API
 5. `kubectl apply -f deployment/udaconnect-app.yaml` - Set up the service and deployment for the web app
-6. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+6. `kubectl apply -f deployment/udaconnect-connections-api.yaml` - Set up the service and deployment for the connections
+7. `kubectl apply -f deployment/udaconnect-location-ingester.yaml` - Set up the service and deployment for the locatin ingester
+8. `kubectl apply -f deployment/udaconnect-location-service.yaml` - Set up the service and deployment for the location service
+9. `kubectl apply -f deployment/udaconnect-persons-api.yaml` - Set up the service and deployment for the persons API
+10. `sh scripts/run_db_command.sh <POD_NAME>` - Seed your database against the `postgres` pod. (`kubectl get pods` will give you the `POD_NAME`)
+
+### Kafka Setup
+`helm install udaconnect-kafka bitnami/kafka`
+
+`kubectl exec -it udaconnect-kafka-0 -- kafka-topics.sh \`
+    `--create --bootstrap-server udaconnect-kafka-headless:9092 \`
+   ` --replication-factor 1 --partitions 1 \`
+   ` --topic location-data`
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
 
@@ -94,7 +106,8 @@ Once the project is up and running, you should be able to see 3 deployments and 
 
 These pages should also load on your web browser:
 * `http://localhost:30001/` - OpenAPI Documentation
-* `http://localhost:30001/api/` - Base path for API
+* `http://localhost:30002/` - Persons API Documentation
+* `http://localhost:30003/` - Connections API Documentation
 * `http://localhost:30000/` - Frontend ReactJS Application
 
 #### Deployment Note

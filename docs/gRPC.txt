@@ -1,0 +1,24 @@
+This is gRPC documentation for service location ingester. the payload will have below variable :
+1. person_id
+2. latitude
+3. longitude
+
+Here is a sample payload:
+
+'''
+{
+    "person_id": 1,
+    "latitude": "-7.602023",
+    "longitude": "111.822257"
+}
+'''
+
+The gRPC running in pod/service 'udaconnect-location-ingester' in port 5005.
+
+you can exec in pod first (kubectl exec -it $pod-name --sh), then you can execute python file below :
+
+'''
+python grpc_client.py
+'''
+
+

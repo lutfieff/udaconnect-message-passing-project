@@ -1,14 +1,7 @@
-# Install helm on the guest VM
-curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-
-sh get_helm.sh
-
 helm install udaconnect-kafka bitnami/kafka
 
-kubectl get pods --namespace default -l "app.kubernetes.io/name=kafka,app.kubernetes.io/instance=udaconnect-kafka,app.kubernetes.io/component=kafka" -o jsonpath="{.items[0].spec.subdomain}")
-
 # Create topic
-kubectl exec -it $POD_NAME -- kafka-topics.sh \
-    --create --bootstrap-server $OUTPUT_FROM_COMMAND:9092 \
+kubectl exec -it udaconnect-kafka-0 -- kafka-topics.sh \
+    --create --bootstrap-server udaconnect-kafka-headless:9092 \
     --replication-factor 1 --partitions 1 \
     --topic location-data

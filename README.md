@@ -90,10 +90,7 @@ Afterwards, you can test that `kubectl` works by running a command like `kubectl
 ### Kafka Setup
 `helm install udaconnect-kafka bitnami/kafka`
 
-`kubectl exec -it udaconnect-kafka-0 -- kafka-topics.sh \`
-    `--create --bootstrap-server udaconnect-kafka-headless:9092 \`
-   ` --replication-factor 1 --partitions 1 \`
-   ` --topic location-data`
+`kubectl exec -it udaconnect-kafka-0 -- kafka-topics.sh --create --bootstrap-server udaconnect-kafka-headless:9092 --replication-factor 1 --partitions 1 --topic location-data`
 
 Manually applying each of the individual `yaml` files is cumbersome but going through each step provides some context on the content of the starter project. In practice, we would have reduced the number of steps by running the command against a directory to apply of the contents: `kubectl apply -f deployment/`.
 
